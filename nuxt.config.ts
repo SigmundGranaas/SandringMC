@@ -2,9 +2,10 @@
 export default defineNuxtConfig({
     modules: [
         '@nuxtjs/color-mode',
-        '@nuxtjs/tailwindcss'
+        '@nuxtjs/tailwindcss',
+        '@nuxt/content'
     ],
-    colorMode: {    classSuffix: ''  },
+    colorMode: {classSuffix: ''},
     srcDir: 'src/',
     css: [
         '@fortawesome/fontawesome-free/css/all.css'
