@@ -1,32 +1,21 @@
 <template>
     <aside>
         <nav>
-            <ul>
-                <template v-for="item in sidebarItems" :key="item.path">
-                    <SidebarItem :item="item"/>
-                </template>
-            </ul>
+            <SidebarTree :tree="sidebarItems" />
         </nav>
     </aside>
 </template>
 
 <script lang="ts" setup>
-
-import {ParsedContent} from "@nuxt/content/dist/runtime/types";
-
+import SidebarTree from './SidebarTree.vue';
 const sidebarItems = ref([] as ParsedContent[]);
 
 async function getSidebarItems(dir: string): Promise<ParsedContent[]> {
     const query = await queryContent(dir).find();
-    return query.map((item: ParsedContent) => {
-        if (item._type === 'directory') {
-            return {
-                ...item,
-                children: getSidebarItems(item.path),
-            };
-        }
-        return item;
-    });
+    const contentItems = query.map(nuxtContentToContentItem);
+    const tree = createContentTree(contentItems);
+    console.log(tree);
+    return  tree;
 }
 
 async function loadSidebarItems() {

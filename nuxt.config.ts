@@ -10,4 +10,5 @@ export default defineNuxtConfig({
     css: [
         '@fortawesome/fontawesome-free/css/all.css'
     ],
+    devServerHandlers: [],
 })
