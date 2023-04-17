@@ -1,6 +1,6 @@
 <template>
     <aside>
-        <nav>
+        <nav class="w-64 border-r border-gray-200 dark:border-gray-700">
             <SidebarTree :tree="sidebarItems" />
         </nav>
     </aside>

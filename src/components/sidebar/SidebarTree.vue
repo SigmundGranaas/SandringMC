@@ -1,13 +1,13 @@
 <template>
-    <ul>
-        <li v-for="item in tree" :key="item._key">
-            <nuxt-link v-if="isEntry(item)" :to="item._path" class="dark:text-white text-sm">
+    <ul class="dark:text-white">
+        <li v-for="item in tree" :key="item._key" class="p-1">
+            <nuxt-link v-if="isEntry(item)" :to="item._path" class="text-sm hover:underline">
                 {{ item.title }}
             </nuxt-link>
-            <template v-else>
-                <span class="nav-folder">{{ item.title }}</span>
-                <sidebar-tree v-if="isDirectory(item)" :tree="item.children" />
-            </template>
+            <div v-else class="pl-1">
+                <button class="outline-none text-md font-bold" @click="onClickFolder">{{ item.title }}<span>^</span></button>
+                <sidebar-tree v-if="isDirectory(item) && isOpen" :tree="item.children" />
+            </div>
         </li>
     </ul>
 </template>
@@ -22,12 +22,18 @@ const props = defineProps({
     },
 });
 
+const isOpen = ref(true)
+
 function isEntry(item: ContentItem): item is EntryItem {
     return 'description' in item;
 }
 
 function isDirectory(item: ContentItem): item is DirectoryItem {
     return 'children' in item;
+}
+
+function onClickFolder(){
+    isOpen.value = !isOpen.value
 }
 </script>
 
